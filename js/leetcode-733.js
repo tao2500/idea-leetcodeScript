@@ -3,11 +3,6 @@ floodFill([[1,1,1],[1,1,0],[1,0,1]],1,1,2);
 function floodFill(image, sr, sc, color) {
   // 递归遍历直接位置的上下左右相同颜色的块，同时修改为指定颜色的块后返回imgge
   let oldColor = image[sr][sc];
-  return fun(image, sr, sc, color, oldColor);
-};
-
-function fun(image, sr, sc, color, oldColor) {
-  // 递归遍历直接位置的上下左右相同颜色的块，同时修改为指定颜色的块后返回imgge
   image[sr][sc] = color;
   // 上
   if(sr > 0 && image[sr - 1][sc] === oldColor)
@@ -24,3 +19,4 @@ function fun(image, sr, sc, color, oldColor) {
   console.log(image);
   return image;
 };
+
