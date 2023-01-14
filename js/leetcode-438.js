@@ -1,4 +1,4 @@
-findAnagrams("cbaebabacd","abc");
+findAnagrams("acdcaeccde","c");
 function findAnagrams (s, p) {
   let has = addMap(p);
   let index = [];
@@ -10,9 +10,11 @@ function findAnagrams (s, p) {
     if(has.has(s[i]) && has.get(s[i]) > 0){
       // 从map中将该字符个数-1
       has.set(s[i], has.get(s[i]) - 1);
+      // 若只有一个字符，则已经是异位词
+      if (size === 1) index.push(i);
       // 若其后size - 1个也包含在srt中，则是一个异位词
       for(let j = 1; j < size; j++){
-        if(!has.has(s[i + j] || has.get(s[i + j]) <= 0)){
+        if(!has.has(s[i + j]) || has.get(s[i + j]) <= 0){
           break;
         }else{
           has.set(s[i + j], has.get(s[i + j]) - 1);
@@ -24,6 +26,7 @@ function findAnagrams (s, p) {
       }
     }
   }
+  console.log(index);
   return index;
 };
 
