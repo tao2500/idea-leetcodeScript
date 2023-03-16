@@ -6,4 +6,7 @@
 //   console.log(!isNaN(n));
 //   return typeof n === 'number' && !isNaN(n);
 // }
-console.log(new Array(..."ABC"));
+
+// console.log(new Array(..."ABC"));
+
+console.log(["a", "b"].includes("a"));
