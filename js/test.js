@@ -9,4 +9,8 @@
 
 // console.log(new Array(..."ABC"));
 
-console.log(["a", "b"].includes("a"));
+// console.log(["a", "b"].includes("a"));
+
+let arr = [1,1,2];
+console.log([...new Set(arr)])
+console.log(new Array(...new Set(arr)));
