@@ -1,7 +1,7 @@
-evalRPN(["2","1","+","3","*"]);
+evalRPN(["10","6","9","3","+","-11","*","/","*","17","+","5","+"]);
 function evalRPN (tokens) {
   let tok = [];
-  console.log();
+  console.log(" ");
   for(let i of tokens){
     switch (i){
       case "+" :
@@ -15,7 +15,7 @@ function evalRPN (tokens) {
         break;
       case "/" :
         let num1 = Number(tok.pop())
-        tok.push(Number(tok.pop()) / num1);
+        tok.push(Math.floor(Number(tok.pop()) / num1));
         break;
       default:
         tok.push(i);

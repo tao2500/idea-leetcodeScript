@@ -11,6 +11,8 @@
 
 // console.log(["a", "b"].includes("a"));
 
-let arr = [1,1,2];
-console.log([...new Set(arr)])
-console.log(new Array(...new Set(arr)));
+// let arr = [1,1,2];
+// console.log([...new Set(arr)])
+// console.log(new Array(...new Set(arr)));
+
+console.log(-0.2 % 1);
