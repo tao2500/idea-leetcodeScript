@@ -7,28 +7,33 @@ var insertionSortList = function(head) {
     head = head.next;
     // 如果当前节点小于头结点当前节点为头结点
     if(head.val < headNode.next.val){
-      // 当前节点的上一节点为已排序链表尾结点
+      // 当前节点的上一节点为已排序链表尾结点,foot依然指向链表尾部
       foot.next = head.next;
       head.next = headNode.next;
       headNode.next = head;
-      continue;
     }
     // 如果当前节点大于排好序的尾结点，则直接插入尾结点
     if(head.val >= foot.val){
       foot = head;
-      continue;
     }else{
-      // 先找到插入位置
+      // 当前节点应插入已排序节点中间
+      // 先找到插入位置的上一个节点
       let targetNode = headNode.next;
       for(let i = targetNode; i.val < head.val; i = i.next) targetNode = i;
       // 扣出待插入的节点(将已排序列表的尾结点的next指向扣出节点的next)
-      if(head.next) foot.next = head.next;
-      // 插入
+      let nextNode = head.next;
+      if(nextNode){
+        foot.next = nextNode;
+      }else{
+        foot.next = null;
+      }
+      // 插入，foot位置不变
       head.next = targetNode.next;
       targetNode.next = head;
     }
     head = foot;
   }
+  console.log(headNode.next);
   return headNode.next;
 };
 function ListNode(val, next) {
