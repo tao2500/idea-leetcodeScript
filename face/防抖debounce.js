@@ -15,9 +15,12 @@ function debounce (fun, time) {
   }
 }
 
-// 第一次立即执行版本
+// 第一次立即执行版本，此后当经过time时间后定时器将timeout置为null（表示此事允许事件执行，当再次触发事件时callNow == !timeout === true，立即执行fun）
+// 同时设置定时器，表示此后time时间内不允许触发事件函数，直到定时器执行，允许再次执行fun...
+// 若在time时间内callNow为false，触发只会重置timeout，不会执行fun。
 function immediatelyDebounce (fun, time, bool) {
   let timeout;
+  // let bool = immediate;
   return () => {
     let context = this;
     let args = arguments;
@@ -31,6 +34,7 @@ function immediatelyDebounce (fun, time, bool) {
       if (callNow) {
         fun.apply(context, args);
       }
+      // bool = false;
     }else {
       timeout = setTimeout(() => {
         fun.apply(context, args);
@@ -38,3 +42,7 @@ function immediatelyDebounce (fun, time, bool) {
     }
   }
 }
+
+window.addEventListener("scroll", immediatelyDebounce(() => {
+  console.log("MyFunction \\" + Date.now())
+}, 3000, true));

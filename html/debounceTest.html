@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>立即执行防抖测试</title>
+  <style>
+    body {
+      height: 5000px;
+    }
+  </style>
+</head>
+<body>
+
+</body>
+<script>
+  function immediatelyDebounce (fun, time, bool) {
+    let timeout;
+    // let bool = immediate;
+    return () => {
+      let context = this;
+      let args = arguments;
+      if (timeout) clearTimeout(timeout);
+      if (bool) {
+        // 第一次触发，马上执行 (当timeout未赋值或等于null时，！timeout === true， 当timeout为setTimeOut的返回值或clearTimeOut的返回值时，！timeOut === false)
+        let callNow = !timeout;
+        timeout = setTimeout(() => {
+          timeout = null;
+        }, time);
+        if (callNow) {
+          console.log("bool内执行 \\" + callNow);
+          fun.apply(context, args);
+        }
+        // bool = false;
+      }else {
+        timeout = setTimeout(() => {
+          fun.apply(context, args);
+        }, time);
+      }
+    }
+  }
+
+  window.addEventListener("scroll", immediatelyDebounce(() => {
+    console.log("MyFunction \\" + Date.now())
+  }, 3000, true));
+</script>
+</html>
