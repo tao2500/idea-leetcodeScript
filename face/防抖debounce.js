@@ -23,7 +23,7 @@ function immediatelyDebounce (fun, time, bool) {
     let args = arguments;
     if (timeout) clearTimeout(timeout);
     if (bool) {
-      // 第一次触发，马上执行
+      // 第一次触发，马上执行 (当timeout未赋值时，！timeout === true， 当timeout为setTimeOut的返回值或clearTimeOut的返回值时，！timeOut === false)
       let callNow = !timeout;
       timeout = setTimeout(() => {
         timeout = null;
