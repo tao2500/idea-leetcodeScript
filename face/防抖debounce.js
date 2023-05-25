@@ -3,10 +3,38 @@
 function debounce (fun, time) {
   let timeout = false;
   return () => {
+    let context = this;
+    let args = arguments;
     if (timeout) {
       clearTimeout(timeout);
     }else {
-      timeout = setTimeout(fun, time);
+      timeout = setTimeout(() => {
+        fun.apply(context, args);
+      }, time);
+    }
+  }
+}
+
+// 第一次立即执行版本
+function immediatelyDebounce (fun, time, bool) {
+  let timeout;
+  return () => {
+    let context = this;
+    let args = arguments;
+    if (timeout) clearTimeout(timeout);
+    if (bool) {
+      // 第一次触发，马上执行
+      let callNow = !timeout;
+      timeout = setTimeout(() => {
+        timeout = null;
+      }, time);
+      if (callNow) {
+        fun.apply(context, args);
+      }
+    }else {
+      timeout = setTimeout(() => {
+        fun.apply(context, args);
+      }, time);
     }
   }
 }
