@@ -5,13 +5,10 @@ function debounce (fun, time) {
   return () => {
     let context = this;
     let args = arguments;
-    if (timeout) {
-      clearTimeout(timeout);
-    }else {
-      timeout = setTimeout(() => {
-        fun.apply(context, args);
-      }, time);
-    }
+    if (timeout) clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      fun.apply(context, args);
+    }, time);
   }
 }
 

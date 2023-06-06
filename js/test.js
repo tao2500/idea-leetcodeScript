@@ -15,4 +15,9 @@
 // console.log([...new Set(arr)])
 // console.log(new Array(...new Set(arr)));
 
-console.log(-0.2 % 1);
+// console.log(-0.2 % 1);
+
+const s = "    123   ";
+console.log(s.length);
+let text = s.trim();
+console.log(text.length);
