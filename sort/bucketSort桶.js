@@ -6,10 +6,11 @@ function bucketSort(arr, bucketSize = 5) {
   // 需要桶的数量
   const bucketCount = Math.floor((max - min) / bucketSize) + 1;
   const buckets = new Array(bucketCount).fill(0).map(() => []);
+  const arrLen = arr.length;
   // 将元素分配到桶中，此时桶中元素大小从左到右依次递增
-  for (let i = 0; i < arr.length; i++) buckets[Math.floor((arr[i] - min) / bucketSize)].push(arr[i]);
+  for (let i = 0; i < arrLen; i++) buckets[Math.floor((arr[i] - min) / bucketSize)].push(arr[i]);
   // 对每个桶进行排序
-  for (let i = 0; i < buckets.length; i++) buckets[i].sort((a, b) => a - b);
+  for (let i = 0; i < bucketCount; i++) buckets[i].sort((a, b) => a - b);
   // 将桶中的元素合并到结果数组
   console.log(...buckets);
   return [].concat(...buckets);
