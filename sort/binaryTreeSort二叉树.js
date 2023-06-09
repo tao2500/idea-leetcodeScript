@@ -1,20 +1,21 @@
+// 利用搜索二叉树的中序遍历来排序。时间复杂度：O(nlog2(n)),空间复杂度：O(logn)(中序遍历时，需要构建栈).属于稳定排序
 // 定义一个二叉搜索树节点类
 class TreeNode {
-  value;
-  left;
-  right;
-
   constructor(value) {
     this.value = value;
     this.left = null;
     this.right = null;
   }
+  get value() {
+    return this._value;
+  }
+  set value(v) {
+    this._value = v;
+  }
 }
 
 // 定义一个二叉搜索树类，包含插入和中序遍历方法
 class BinarySearchTree {
-  root;
-
   constructor() {
     this.root = null;
   }
