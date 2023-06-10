@@ -9,13 +9,11 @@ function shuffle(arr) {
     [arr[i], arr[j]] = [arr[j], arr[i]];
   }
 }
-
 // 验证是否是有序序列
 function isSorted(arr) {
   for (let i = 1; i < arr.length; i++) if (arr[i - 1] > arr[i]) return false;
   return true;
 }
-
-const arr = [1, 9, 7, 5, 11, 12, 2, 14, 3, 10, 6];
+const arr = [999,3,1,6,5,0,-1];
 bogosort(arr);
 console.log(arr);
