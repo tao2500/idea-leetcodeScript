@@ -12,4 +12,4 @@ function pigeonholeSort(arr) {
   return [].concat(...pigeonholes);
 }
 const arr7 = [9, 7, 5, 11, 12, 2, 14, 3, 10, 6];
-console.log(pigeonholeSort(arr7));  // 输出：[2, 3, 5, 6, 7, 9, 10, 11, 12, 14]
+console.log(pigeonholeSort(arr7));
