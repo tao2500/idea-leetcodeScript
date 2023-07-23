@@ -1,21 +1,148 @@
+<!--实现一个贪吃蛇小游戏-->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <style>
-    .triangle-down {
-      width: 0;
-      height: 0;
-      border-left: 250px solid transparent;
-      border-right: 250px solid transparent;
-      border-top: 250px solid red;
+  <meta charset="utf-8">
+  <title>贪吃蛇</title>
+  <style type="text/css">
+    body {
+      margin: 0;
+      background-color: #f5f5f5;
+    }
+
+    #back {
+      width: 600px;
+      height: 600px;
       margin: 0 auto;
+      border: 1px solid #333;
+      box-shadow: 0px 0px 3px #999;
+      background-color: #fff;
+    }
+
+    #back .single {
+      width: 20px;
+      height: 20px;
+      float: left;
+      background-color: #fff;
+    }
+
+    #back .single.on {
+      background-color: #000;
+    }
+
+    #back .single.food {
+      background-color: #f00;
     }
   </style>
 </head>
 <body>
-<!--纯css绘制 500px * 500px 大小的向下三角形并且垂直方向居中-->
-<div class="triangle-down"></div>
+<div id="back"></div>
+<script type="text/javascript">
+  var back = document.getElementById('back');
+  var snake = [];
+  var food = null;
+  var direction = 'right';
+  var timer = null;
+  var score = 0;
+  var scoreBox = document.createElement('div');
+  scoreBox.style.cssText = 'width: 100%;height: 40px;line-height: 40px;text-align: center;font-size: 30px;color: #000;';
+  scoreBox.innerHTML = '得分：' + score;
+  back.appendChild(scoreBox);
+  for (var i = 0; i < 30; i++) {
+    for (var j = 0; j < 30; j++) {
+      var single = document.createElement('div');
+      single.className = 'single';
+      single.id = 'x' + j + 'y' + i;
+      back.appendChild(single);
+    }
+  }
+  snake.push(document.getElementById('x15y15'));
+  snake.push(document.getElementById('x16y15'));
+  snake.push(document.getElementById('x17y15'));
+  snake[0].className = 'single on';
+  snake[1].className = 'single on';
+  snake[2].className = 'single on';
+  createFood();
+  document.onkeydown = function (e) {
+    var code = e.keyCode;
+    switch (code) {
+      case 37:
+        if (direction != 'right') {
+          direction = 'left';
+        }
+        break;
+      case 38:
+        if (direction != 'down') {
+          direction = 'up';
+        }
+        break;
+      case 39:
+        if (direction != 'left') {
+          direction = 'right';
+        }
+        break;
+      case 40:
+        if (direction != 'up') {
+          direction = 'down';
+        }
+        break;
+    }
+  }
+  timer = setInterval(function () {
+    var snakeHead = snake[snake.length - 1];
+    var snakeHeadId = snakeHead.id;
+    var snakeHeadX = parseInt(snakeHeadId.substr(1, snakeHeadId.indexOf('y') - 1));
+    var snakeHeadY = parseInt(snakeHeadId.substr(snakeHeadId.indexOf('y') + 1));
+    switch (direction) {
+      case 'left':
+        snakeHeadX--;
+        break;
+      case 'up':
+        snakeHeadY--;
+        break;
+      case 'right':
+        snakeHeadX++;
+        break;
+      case 'down':
+        snakeHeadY++;
+        break;
+    }
+    if (snakeHeadX < 0 || snakeHeadX > 29 || snakeHeadY < 0 || snakeHeadY > 29) {
+      alert('游戏结束');
+      clearInterval(timer);
+      return;
+    }
+    var next = document.getElementById('x' + snakeHeadX + 'y' + snakeHeadY);
+    if (next.className.indexOf('on') != -1) {
+      alert('游戏结束');
+      clearInterval(timer);
+      return;
+    }
+    if (next.className.indexOf('food') != -1) {
+      next.className = 'single on';
+      snake.push(next);
+      createFood();
+      score++;
+      scoreBox.innerHTML = '得分：' + score;
+    } else {
+      next.className = 'single on';
+      snake.push(next);
+      snake[0].className = 'single';
+      snake.shift();
+    }
+  }, 200);
+
+  function createFood() {
+    var x = Math.floor(Math.random() * 30);
+    var y = Math.floor(Math.random() * 30);
+    var food = document.getElementById('x' + x + 'y' + y);
+    if (food.className.indexOf('on') != -1) {
+      createFood();
+    } else {
+      food.className = 'single food';
+    }
+  }
+</script>
+
 </body>
 </html>
