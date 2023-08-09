@@ -11,10 +11,10 @@ Function.prototype.myApply = function (thisArg, args) {
   return result;
 };
 
-Function.prototype.myBind = function (thisArg, args1, ...args2) {
+Function.prototype.myBind = function (thisArg, ...args) {
   const fn = this;
   return function (...args2) {
-    return fn.myApply(thisArg, args1.concat(args2));
+    return fn.myApply(thisArg, args.concat(args2));
   };
 };
 
@@ -27,4 +27,5 @@ function greet(greeting, punctuation) {
 }
 
 const boundGreet = greet.myBind(obj, "Hey");
+// boundGreet();
 boundGreet("QAQ");

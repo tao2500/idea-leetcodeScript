@@ -7,7 +7,7 @@ Function.prototype.myCall = function (thisArg, ...args) {
   const fun = this;
   // 创建唯一的属性名
   const uniqueKey = Symbol("uniqueKey");
-  // 将函数设为对象的属性
+  // 将函数设为对象的属性（调用后this值自然就指向该对象）
   thisArg[uniqueKey] = fun;
   // 执行该函数
   const result = thisArg[uniqueKey](...args);
