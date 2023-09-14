@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>利用父元素BFC清除浮动</title>
+  <style>
+    .fader {
+      width: 220px;
+      /*未设置高度，父元素高度由子元素浮动而塌缩*/
+      /*height: 200px;*/
+      background-color: black;
+      /*生成BFC，清除浮动*/
+      overflow: auto;
+    }
+    .son {
+      width: 100px;
+      height: 100px;
+      background-color: #f00;
+      float: left;
+    }
+    /*.clear {*/
+    /*  clear: both;*/
+    /*}*/
+    .son1 {
+      width: 100px;
+      height: 110px;
+      background-color: blue;
+      /*clear: both;*/
+    }
+  </style>
+</head>
+<body>
+  <div class="fader">
+    <div class="son"></div>
+    <div class="clear"></div>
+    <div class="son1"></div>
+  </div>
+</body>
+</html>
