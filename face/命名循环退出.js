@@ -20,7 +20,7 @@ const arr = [
 
 let person = undefined
 
-// 为紧邻的for循环命名
+// 为紧邻的for循环命名，只能用于for循环
 testLoop:
   for (let i = 0; i < arr.length; i++) {
 
