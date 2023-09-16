@@ -7,6 +7,7 @@ const readline = async () => (await iter.next()).value;
 // 1. (不一定都包含月日或者分秒？) ac无提升
 // 2. (分隔符不一定为‘-’或‘：’) ac无提升
 // 3. (还可能输入的是iso时间？)
+// 4. (看了网友解答，若月份和日期为1位数，前面去掉0)
 void async function () {
   const line = await readline();
   const tokens = line.split(' ');
