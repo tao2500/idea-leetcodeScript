@@ -24,11 +24,11 @@ let aa = 4 >= 6 || true && 1 || false;
 console.log(aa);
 
 console.log("------------------");
-for (var i = 0; i < 8 ; i++) {
-  setTimeout(() => {
-    console.log(i);
-  }, 0);
-}
+// for (var i = 0; i < 8 ; i++) {
+//   setTimeout(() => {
+//     console.log(i);
+//   }, 0);
+// }
 
 console.log("------------------");
 let arr = [1,2,3,4,5,6,7,8,9];
@@ -81,3 +81,27 @@ let arr7 = [1,2,3,4,5,6,7,8,9];
 console.log(arr7.reduce((x, y) => x + y));
 console.log(arr7);
 
+
+
+
+
+
+
+
+
+
+
+console.log("------------------");
+// splice,删除元素，改变原数组
+let arr8 = [1,2,3,4,5,6,7,8,9];
+console.log(arr8.splice(0, 3));
+console.log(arr8);
+
+console.log("------------------");
+// fill,填充元素，改变原数组
+let arr9 = [1,2,3,4,5,6,7,8,9];
+console.log(arr9.fill(0, 0, 3));
+console.log(arr9);
+
+console.log("------------------");
+console.log("其他改变原数组的方法：push、pop、shift、unshift、reverse、sort");
