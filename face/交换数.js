@@ -23,3 +23,12 @@ function swap3(x, y){
 console.log(swap1(1, 2));
 console.log(swap2(3, 2));
 console.log(swap3(1, 2));
+
+console.log("------------------");
+let a = 1, b = 2;
+a = a ^ b;
+console.log(a);
+b = a ^ b; // === a ^ b ^ b === a ^ 0 === a
+console.log(b);
+a = a ^ b; // === a ^ b ^ a === b ^ 0 === b
+console.log(a);
