@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* 填写样式 */
+  </style>
+</head>
+
+<body>
+<!-- 填写标签 -->
+<script type="text/javascript">
+  // 填写JavaScript
+  function curryIt(fn) {
+    let arg = [];
+    return function a (arg1 = null){
+      arg.push(...arg1);
+      let length = 1;
+      return function b(arg2 = null) {
+        arg.push(...arg2);
+        let length = 1;
+        return function c(arg3 = null) {
+          arg.push(...arg3);
+          let length = 1;
+          return fn(...arg);
+        }
+      }
+    }
+  }
+</script>
+</body>
+
+</html>
