@@ -6,7 +6,7 @@
   <style>
     /* 填写样式 */
     .content{  font-size: 14px;}
-    .content em{  font-style: normal;    color: #c00;}
+    .content em{  font-style: normal;    color: #c00;  }
   </style>
 </head>
 
@@ -20,8 +20,11 @@
 <script type="text/javascript">
   // 填写JavaScript，高亮显示相关字符
   function highlight(word) {
-
+    let content = document.getElementById('jsContent');
+    let reg = new RegExp(word, 'g');
+    content.innerHTML = content.innerHTML.replace(reg, '<em>' + word + '</em>');
   }
+  highlight('框架');
 </script>
 </body>
 
