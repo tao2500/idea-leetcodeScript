@@ -40,8 +40,28 @@ let ret3 = arr => arr.reduce((pre, cur) => {
 console.log(ret3(arr2));
 
 
-
-
-
+console.log("**********以下为js指针的探讨");
 // js数组有依据正则表达式的替换方法吗？类似于字符串的replace方法
 // 没有，可以用map方法手动实现
+
+// js有像C中指针的概念吗？有的话怎么用？
+// js中的对象是引用类型，所以可以用对象来模拟指针
+var foo = {'bar': 1};
+
+function tryToMungeReference(obj) {
+  obj = {'bar': 2};  // won't change caller's object
+}
+
+function mungeContents(obj) {
+  obj.bar = 2;       // changes _contents_ of caller's object
+}
+// 以上两个函数的区别在于，一个是修改了指针，一个是修改了指针指向的内容
+// 以下是测试代码
+tryToMungeReference(foo);
+// true，说明foo的指针没有被修改
+console.log(foo.bar === 1);
+
+mungeContents(foo);
+// true，说明foo的指针指向的内容被修改了
+console.log(foo.bar === 2);
+
