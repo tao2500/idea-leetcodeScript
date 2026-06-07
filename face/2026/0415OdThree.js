@@ -36,6 +36,15 @@
 const a = [1, 4, 1];
 const b = [5, 1, 1];
 
+function win(aa, bb) {
+    if(aa.length === 0 && bb.length > 0) {
+        return bb.shift()
+    }
+    if (bb.length === 0 && aa.length > 0) {
+        return aa.shift()
+    }
+} 
+
 function game(a, b) {
     // 桌面上的队列
     const queue = [];
@@ -49,34 +58,116 @@ function game(a, b) {
         // 判定是否收牌
         if(m.has(avalue) && m.get(avalue) > 0) {
             queue.push(avalue);
-            aa = aa.concat(queue.splice(m.get(avalue), queue.length - m.get(avalue)))
+            aa = aa.concat(queue.splice(m.get(avalue)))
             m.set(avalue, -1);
         } else {
             queue.push(avalue);
             m.set(avalue, queue.length - 1);
         }
         queue.push(avalue)
+        const ok1 = win(aa, bb);
+        if (ok1) return ok1
         const bvalue = bb.shift();
         // 判定是否收牌
         if(m.has(bvalue) && m.get(bvalue) > 0) {
             queue.push(bvalue);
-            bb = bb.concat(queue.splice(m.get(bvalue), queue.length - m.get(bvalue)))
+            bb = bb.concat(queue.splice(m.get(bvalue)))
             m.set(bvalue, -1);
             console.log('test',bvalue, bb)
         } else {
             queue.push(bvalue);
             m.set(bvalue, queue.length - 1);
         }
+        const okk = win(aa, bb);
+        if (okk) return okk
         // 判定是否收牌
         num ++;
     }
-    if(aa.length === 0 && bb.length > 0) {
-        return bb.shift()
-    }
-    if (bb.length === 0 && aa.length > 0) {
-        return aa.shift()
-    }
+    const ok = win(aa, bb);
+    if (ok) return ok
     return 0
 }
 
 console.log('res', game(a, b));
+
+// 测试用例
+function test() {
+    let score = 0;
+    let totalTests = 0;
+
+    // 测试1: 基础用例 [1,4,1] vs [5,1,1]
+    totalTests++;
+    const test1A = [1, 4, 1];
+    const test1B = [5, 1, 1];
+    const result1 = game([...test1A], [...test1B]);
+    // 甲出1，乙出5，甲出4，乙出1(与桌面第一张1相同，乙收牌[1,5,4,1])，甲出1，乙出1(相同，乙收牌)，甲无牌，乙获胜
+    // 乙最后手牌: [1] -> 输出1
+    const expected1 = 1;
+
+    if (result1 === expected1) {
+        score += 25;
+        console.log('测试1通过: 基础用例 [1,4,1] vs [5,1,1]');
+    } else {
+        console.log('测试1失败: 基础用例 [1,4,1] vs [5,1,1]');
+        console.log('期望:', expected1);
+        console.log('实际:', result1);
+    }
+
+    // 测试2: 平局情况 [1,2,3] vs [4,5,6]
+    totalTests++;
+    const test2A = [1, 2, 3];
+    const test2B = [4, 5, 6];
+    const result2 = game([...test2A], [...test2B]);
+    // 双方都无法触发收牌，最终都出完牌，平局
+    const expected2 = 0;
+
+    if (result2 === expected2) {
+        score += 25;
+        console.log('测试2通过: 平局情况 [1,2,3] vs [4,5,6]');
+    } else {
+        console.log('测试2失败: 平局情况 [1,2,3] vs [4,5,6]');
+        console.log('期望:', expected2);
+        console.log('实际:', result2);
+    }
+
+    // 测试3: J牌收牌规则
+    totalTests++;
+    const test3A = [1, 11]; // 1, J
+    const test3B = [2, 3];
+    const result3 = game([...test3A], [...test3B]);
+    // 甲出1，乙出2，甲出J(桌面上有牌，甲收走所有牌[1,2,J])，乙出3，甲无牌，乙获胜
+    // 乙最后手牌: [3] -> 输出3
+    const expected3 = 3;
+
+    if (result3 === expected3) {
+        score += 25;
+        console.log('测试3通过: J牌收牌规则 [1,11] vs [2,3]');
+    } else {
+        console.log('测试3失败: J牌收牌规则 [1,11] vs [2,3]');
+        console.log('期望:', expected3);
+        console.log('实际:', result3);
+    }
+
+    // 测试4: 甲获胜情况
+    totalTests++;
+    const test4A = [1, 2, 3];
+    const test4B = [4, 1, 5];
+    const result4 = game([...test4A], [...test4B]);
+    // 甲出1，乙出4，甲出2，乙出1(与桌面第一张1相同，乙收牌[1,4,2,1])，甲出3，乙无牌，甲获胜
+    // 甲最后手牌: [3] -> 输出3
+    const expected4 = 3;
+
+    if (result4 === expected4) {
+        score += 25;
+        console.log('测试4通过: 甲获胜情况 [1,2,3] vs [4,1,5]');
+    } else {
+        console.log('测试4失败: 甲获胜情况 [1,2,3] vs [4,1,5]');
+        console.log('期望:', expected4);
+        console.log('实际:', result4);
+    }
+
+    console.log(`\n总分: ${score}/100`);
+    return score;
+}
+
+test();
