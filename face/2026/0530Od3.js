@@ -57,6 +57,63 @@ console.log('res', get([-1, -2, 3], 3, 3));  // 输出: 0
 console.log('res', get([3, -2, 5, -1], 4, 3));  // 输出: 6
 
 
+// 思路: 动态规划 + 滑动窗口
+// 环形数组：复制一倍，寻找最大的连续子段和能被k整除
+// 用前缀和+滑动窗口：
+// - prefixSum[i] 表示前 i 个元素的和
+// - 子段和 = prefixSum[i] - prefixSum[j]，长度 = i - j
+// - 条件：i - j < n
+// - 维护滑动窗口内最小的 prefixSum[j]
+function get(arr, n, k) {
+    if (k === 0) return 0;
+
+    // 环形数组：复制一倍，最多2n个元素
+    const extendedArr = [...arr, ...arr];
+    const prefixSum = new Array(2 * n + 1).fill(0);
+    for (let i = 0; i < 2 * n; i++) {
+        prefixSum[i + 1] = prefixSum[i] + extendedArr[i];
+    }
+
+    let maxSum = 0;
+    let minPrefixSum = prefixSum[0]; // 窗口内最小的 prefixSum[j]
+
+    for (let i = 1; i < 2 * n; i++) {
+        // 维护滑动窗口：窗口长度不超过 n，即 j >= i - n
+        if (i - n >= 0) {
+            minPrefixSum = Math.min(minPrefixSum, prefixSum[i - n]);
+        }
+
+        // 计算窗口内最大的子段和 = prefixSum[i] - minPrefixSum
+        const subSum = prefixSum[i] - minPrefixSum;
+        if (subSum % k === 0 && subSum > maxSum) {
+            maxSum = subSum;
+        }
+    }
+
+    return maxSum;
+}
+
+// 测试用例
+// Test1: [1,2,3,4,5] = 15, 15%3=0, 最大子段和15（从索引1到5）
+console.log('res', get([1, 2, 3, 4, 5], 5, 3));  // 输出: 15
+
+// Test2: [-1,-2,3] = 0, 0%3=0, 最大子段和0
+console.log('res', get([-1, -2, 3], 3, 3));  // 输出: 0
+
+// Test3: [3,-2,5,-1]
+// 满足条件的子段和: [3]=3, [3,-2,5]=6, [-2,5]=3
+// 最大是6
+console.log('res', get([3, -2, 5, -1], 4, 3));  // 输出: 6
+
+
 // 反思： 79%
 // 1. 数组复制两倍成环
-// 2. 记录前缀和之差，如果前缀和之差能被k整除，说明这两个前缀和之间的之和能被k整除
+// 2. 动态规划：dp[i] = max(extendedArr[i], dp[i-1] + extendedArr[i])
+// 3. 在遍历时检查 dp[i] 能否被 k 整除，记录最大值
+
+
+
+
+// 反思： 79%
+// 1. 数组复制两倍成环
+// 2. 利用同余性质快速查找子段，如果前缀和的同余相同，说明这两个前缀和之间的之和能被k整除
